@@ -7,9 +7,13 @@ interface SettingsState {
     achievements: boolean;
     community: boolean;
   };
-  theme: 'light' | 'dark' | 'system';
+  rules: {
+    penalties: boolean;
+    strictMode: boolean;
+    timeLimit: boolean;
+  };
   setNotification: (key: keyof SettingsState['notifications'], value: boolean) => void;
-  setTheme: (theme: SettingsState['theme']) => void;
+  setRule: (key: keyof SettingsState['rules'], value: boolean) => void;
 }
 
 export const useSettingsStore = create<SettingsState>((set) => ({
@@ -18,7 +22,11 @@ export const useSettingsStore = create<SettingsState>((set) => ({
     achievements: true,
     community: true,
   },
-  theme: 'system',
+  rules: {
+    penalties: false,
+    strictMode: false,
+    timeLimit: false,
+  },
   setNotification: (key, value) =>
     set((state) => ({
       notifications: {
@@ -26,5 +34,11 @@ export const useSettingsStore = create<SettingsState>((set) => ({
         [key]: value,
       },
     })),
-  setTheme: (theme) => set({ theme }),
+  setRule: (key, value) =>
+    set((state) => ({
+      rules: {
+        ...state.rules,
+        [key]: value,
+      },
+    })),
 }));

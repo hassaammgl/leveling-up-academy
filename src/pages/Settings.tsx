@@ -5,22 +5,21 @@ import { Footer } from '@/components/navigation/footer';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Label } from '@/components/ui/label';
 import { Input } from '@/components/ui/input';
-import { Button } from '@/components/ui/button';
-import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
 import { useSettingsStore } from '@/store/useSettingsStore';
 import { toast } from 'sonner';
+import { Shield, Bell } from 'lucide-react';
 
 const Settings = () => {
-  const { notifications, theme, setNotification, setTheme } = useSettingsStore();
+  const { notifications, rules, setNotification, setRule } = useSettingsStore();
 
   const handleNotificationChange = (key: keyof typeof notifications) => {
     setNotification(key, !notifications[key]);
     toast.success(`${key} notifications ${notifications[key] ? 'disabled' : 'enabled'}`);
   };
 
-  const handleThemeChange = (newTheme: typeof theme) => {
-    setTheme(newTheme);
-    toast.success(`Theme changed to ${newTheme}`);
+  const handleRuleChange = (key: keyof typeof rules) => {
+    setRule(key, !rules[key]);
+    toast.success(`${key} ${rules[key] ? 'disabled' : 'enabled'}`);
   };
 
   return (
@@ -36,7 +35,10 @@ const Settings = () => {
           <div className="space-y-8 mt-8">
             <Card>
               <CardHeader>
-                <CardTitle>Notification Settings</CardTitle>
+                <div className="flex items-center gap-2">
+                  <Bell className="h-5 w-5 text-solo-blue" />
+                  <CardTitle>Notification Settings</CardTitle>
+                </div>
               </CardHeader>
               <CardContent className="space-y-4">
                 <div className="flex items-center justify-between">
@@ -71,25 +73,47 @@ const Settings = () => {
 
             <Card>
               <CardHeader>
-                <CardTitle>Display Settings</CardTitle>
+                <div className="flex items-center gap-2">
+                  <Shield className="h-5 w-5 text-solo-purple" />
+                  <CardTitle>Challenge Rules</CardTitle>
+                </div>
               </CardHeader>
               <CardContent className="space-y-4">
-                <div className="space-y-2">
-                  <Label>Theme Preference</Label>
-                  <RadioGroup value={theme} onValueChange={handleThemeChange}>
-                    <div className="flex items-center space-x-2">
-                      <RadioGroupItem value="light" id="light" />
-                      <Label htmlFor="light">Light</Label>
-                    </div>
-                    <div className="flex items-center space-x-2">
-                      <RadioGroupItem value="dark" id="dark" />
-                      <Label htmlFor="dark">Dark</Label>
-                    </div>
-                    <div className="flex items-center space-x-2">
-                      <RadioGroupItem value="system" id="system" />
-                      <Label htmlFor="system">System</Label>
-                    </div>
-                  </RadioGroup>
+                <div className="flex items-center justify-between">
+                  <div className="space-y-1">
+                    <Label htmlFor="penalties">XP Penalties</Label>
+                    <p className="text-sm text-muted-foreground">Lose XP for incorrect answers</p>
+                  </div>
+                  <Input
+                    type="checkbox"
+                    id="penalties"
+                    checked={rules.penalties}
+                    onChange={() => handleRuleChange('penalties')}
+                  />
+                </div>
+                <div className="flex items-center justify-between">
+                  <div className="space-y-1">
+                    <Label htmlFor="strict-mode">Strict Mode</Label>
+                    <p className="text-sm text-muted-foreground">No hints or help available</p>
+                  </div>
+                  <Input
+                    type="checkbox"
+                    id="strict-mode"
+                    checked={rules.strictMode}
+                    onChange={() => handleRuleChange('strictMode')}
+                  />
+                </div>
+                <div className="flex items-center justify-between">
+                  <div className="space-y-1">
+                    <Label htmlFor="time-limit">Time Limits</Label>
+                    <p className="text-sm text-muted-foreground">Enable time limits on challenges</p>
+                  </div>
+                  <Input
+                    type="checkbox"
+                    id="time-limit"
+                    checked={rules.timeLimit}
+                    onChange={() => handleRuleChange('timeLimit')}
+                  />
                 </div>
               </CardContent>
             </Card>
