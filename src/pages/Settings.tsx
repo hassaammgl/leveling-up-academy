@@ -7,8 +7,22 @@ import { Label } from '@/components/ui/label';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
+import { useSettingsStore } from '@/store/useSettingsStore';
+import { toast } from 'sonner';
 
 const Settings = () => {
+  const { notifications, theme, setNotification, setTheme } = useSettingsStore();
+
+  const handleNotificationChange = (key: keyof typeof notifications) => {
+    setNotification(key, !notifications[key]);
+    toast.success(`${key} notifications ${notifications[key] ? 'disabled' : 'enabled'}`);
+  };
+
+  const handleThemeChange = (newTheme: typeof theme) => {
+    setTheme(newTheme);
+    toast.success(`Theme changed to ${newTheme}`);
+  };
+
   return (
     <div className="flex flex-col min-h-screen">
       <Header />
@@ -27,15 +41,30 @@ const Settings = () => {
               <CardContent className="space-y-4">
                 <div className="flex items-center justify-between">
                   <Label htmlFor="quest-notifications">Quest Notifications</Label>
-                  <Input type="checkbox" id="quest-notifications" />
+                  <Input
+                    type="checkbox"
+                    id="quest-notifications"
+                    checked={notifications.quests}
+                    onChange={() => handleNotificationChange('quests')}
+                  />
                 </div>
                 <div className="flex items-center justify-between">
                   <Label htmlFor="achievement-notifications">Achievement Notifications</Label>
-                  <Input type="checkbox" id="achievement-notifications" />
+                  <Input
+                    type="checkbox"
+                    id="achievement-notifications"
+                    checked={notifications.achievements}
+                    onChange={() => handleNotificationChange('achievements')}
+                  />
                 </div>
                 <div className="flex items-center justify-between">
                   <Label htmlFor="community-notifications">Community Updates</Label>
-                  <Input type="checkbox" id="community-notifications" />
+                  <Input
+                    type="checkbox"
+                    id="community-notifications"
+                    checked={notifications.community}
+                    onChange={() => handleNotificationChange('community')}
+                  />
                 </div>
               </CardContent>
             </Card>
@@ -47,7 +76,7 @@ const Settings = () => {
               <CardContent className="space-y-4">
                 <div className="space-y-2">
                   <Label>Theme Preference</Label>
-                  <RadioGroup defaultValue="system">
+                  <RadioGroup value={theme} onValueChange={handleThemeChange}>
                     <div className="flex items-center space-x-2">
                       <RadioGroupItem value="light" id="light" />
                       <Label htmlFor="light">Light</Label>
@@ -62,7 +91,6 @@ const Settings = () => {
                     </div>
                   </RadioGroup>
                 </div>
-                <Button>Save Changes</Button>
               </CardContent>
             </Card>
           </div>
