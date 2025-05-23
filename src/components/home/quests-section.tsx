@@ -5,6 +5,8 @@ import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardFooter, CardHeader } from '@/components/ui/card';
 import { Award, Calendar, Clock, Swords, Target, Trophy } from 'lucide-react';
+import { useGamesStore } from '@/store/useGamesStore';
+import { toast } from 'sonner';
 
 const quests = [
   {
@@ -46,6 +48,22 @@ const quests = [
 ];
 
 export function QuestsSection() {
+  const { markQuestComplete } = useGamesStore();
+
+  const handleAcceptQuest = (questId: number, questTitle: string) => {
+    // Simulate quest completion for demo purposes
+    setTimeout(() => {
+      markQuestComplete(questId.toString());
+      toast.success(`Quest "${questTitle}" completed! +${quests.find(q => q.id === questId)?.xp} XP`, {
+        position: "top-center",
+      });
+    }, 2000);
+    
+    toast.info(`Quest "${questTitle}" started! Completing in 2 seconds for demo...`, {
+      position: "top-center",
+    });
+  };
+
   return (
     <section className="py-16 md:py-24 bg-gradient-to-b from-transparent to-solo-darker/50">
       <div className="container">
@@ -97,7 +115,10 @@ export function QuestsSection() {
                 </div>
               </CardContent>
               <CardFooter>
-                <Button className="w-full bg-gradient-to-r from-solo-blue to-solo-purple hover:opacity-90 transition-opacity">
+                <Button 
+                  className="w-full bg-gradient-to-r from-solo-blue to-solo-purple hover:opacity-90 transition-opacity"
+                  onClick={() => handleAcceptQuest(quest.id, quest.title)}
+                >
                   Accept Quest
                 </Button>
               </CardFooter>

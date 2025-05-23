@@ -9,6 +9,7 @@ import { QuestsSection } from '@/components/home/quests-section';
 import { LeaderboardSection } from '@/components/home/leaderboard-section';
 import { GamificationSection } from '@/components/home/gamification-section';
 import { NotificationPanel } from '@/components/home/notification-panel';
+import { GamesModal } from '@/components/games/games-modal';
 
 const Index = () => {
   const [showNotification, setShowNotification] = useState(false);
@@ -57,6 +58,8 @@ const Index = () => {
         onAccept={handleAccept}
         onClose={handleClose}
       />
+      
+      <GamesModal />
     </div>
   );
 };
