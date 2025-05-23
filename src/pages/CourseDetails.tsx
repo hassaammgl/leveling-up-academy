@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { Header } from '@/components/navigation/header';
@@ -10,6 +9,7 @@ import { Progress } from '@/components/ui/progress';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { ArrowLeft, Play, Clock, Users, Star, CheckCircle, Lock } from 'lucide-react';
 import { toast } from 'sonner';
+import { TestsSection } from '@/components/course/tests-section';
 
 // Course data - in a real app this would come from an API
 const courseData = {
@@ -186,9 +186,10 @@ const CourseDetails = () => {
         {/* Course Content */}
         <div className="container py-12">
           <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
-            <TabsList className="grid w-full grid-cols-4">
+            <TabsList className="grid w-full grid-cols-5">
               <TabsTrigger value="overview">Overview</TabsTrigger>
               <TabsTrigger value="curriculum">Curriculum</TabsTrigger>
+              <TabsTrigger value="tests">Tests</TabsTrigger>
               <TabsTrigger value="instructor">Instructor</TabsTrigger>
               <TabsTrigger value="reviews">Reviews</TabsTrigger>
             </TabsList>
@@ -262,6 +263,10 @@ const CourseDetails = () => {
                   </Card>
                 ))}
               </div>
+            </TabsContent>
+            
+            <TabsContent value="tests" className="mt-8">
+              <TestsSection />
             </TabsContent>
             
             <TabsContent value="instructor" className="mt-8">
