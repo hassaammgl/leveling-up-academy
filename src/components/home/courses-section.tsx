@@ -130,8 +130,10 @@ export function CoursesSection() {
                 </div>
               </CardContent>
               <CardFooter>
-                <Button className="w-full bg-gradient-to-r from-solo-blue to-solo-purple hover:opacity-90 transition-opacity">
-                  Start Course
+                <Button asChild className="w-full bg-gradient-to-r from-solo-blue to-solo-purple hover:opacity-90 transition-opacity">
+                  <Link to={`/courses/${course.id}`}>
+                    Start Course
+                  </Link>
                 </Button>
               </CardFooter>
             </Card>
