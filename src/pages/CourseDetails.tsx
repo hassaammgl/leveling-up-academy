@@ -78,9 +78,8 @@ const CourseDetails = () => {
   }
 
   const handleStartLesson = (lessonId: number) => {
-    toast.success(`Starting lesson ${lessonId}`, {
-      position: "top-center",
-    });
+    // Navigate to lesson page instead of just showing toast
+    window.location.href = `/courses/${courseId}/lessons/${lessonId}`;
   };
 
   const handleEnrollCourse = () => {
