@@ -913,34 +913,6 @@ const LessonDetails = () => {
                     __html: renderContent(lesson.content)
                   }}
                 />
-                <style jsx>{`
-                  .lesson-content .code-block {
-                    background: #1e1e1e;
-                    border-radius: 8px;
-                    margin: 16px 0;
-                    overflow-x: auto;
-                  }
-                  .lesson-content .code-block pre {
-                    margin: 0;
-                    padding: 16px;
-                    color: #d4d4d4;
-                    font-family: 'Courier New', monospace;
-                    font-size: 14px;
-                    line-height: 1.5;
-                  }
-                  .lesson-content .code-block.html pre {
-                    border-left: 4px solid #e34c26;
-                  }
-                  .lesson-content .code-block.css pre {
-                    border-left: 4px solid #1572b6;
-                  }
-                  .lesson-content .code-block.js pre {
-                    border-left: 4px solid #f7df1e;
-                  }
-                  .lesson-content .tag {
-                    color: #569cd6;
-                  }
-                `}</style>
               </CardContent>
             </Card>
 
@@ -983,6 +955,38 @@ const LessonDetails = () => {
       </main>
       
       <Footer />
+      
+      {/* Embedded CSS for code highlighting */}
+      <style dangerouslySetInnerHTML={{
+        __html: `
+          .lesson-content .code-block {
+            background: #1e1e1e;
+            border-radius: 8px;
+            margin: 16px 0;
+            overflow-x: auto;
+          }
+          .lesson-content .code-block pre {
+            margin: 0;
+            padding: 16px;
+            color: #d4d4d4;
+            font-family: 'Courier New', monospace;
+            font-size: 14px;
+            line-height: 1.5;
+          }
+          .lesson-content .code-block.html pre {
+            border-left: 4px solid #e34c26;
+          }
+          .lesson-content .code-block.css pre {
+            border-left: 4px solid #1572b6;
+          }
+          .lesson-content .code-block.js pre {
+            border-left: 4px solid #f7df1e;
+          }
+          .lesson-content .tag {
+            color: #569cd6;
+          }
+        `
+      }} />
     </div>
   );
 };
